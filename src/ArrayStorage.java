@@ -8,6 +8,7 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
+        System.out.println(r);
     }
 
     Resume get(String uuid) {
