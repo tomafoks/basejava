@@ -17,10 +17,14 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i].uuid == uuid)
-                return storage[i];
+        for (Resume resume : storage) {
+            if (resume != null) {
+                if (resume.uuid == uuid) {
+                    return resume;
+                }
+            }
         }
+        return null;
     }
 
     void delete(String uuid) {
