@@ -33,6 +33,19 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
+        for (Resume resume : storage) {
+            if (resume == null) {
+                break;
+            }
+            if (resume.uuid == uuid) {
+                resume = null;
+            }
+        }
+
+        for (int i = 2; i < storage.length - 1; i++) {
+            storage[i - 1] = storage[i];
+            storage[i] = null;
+        }
     }
 
     /**
