@@ -6,8 +6,7 @@ public class ArrayStorage {
 
     void clear() {
         for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null)
-                break;
+            if (storage[i] == null) break;
             storage[i] = null;
         }
     }
@@ -62,6 +61,11 @@ public class ArrayStorage {
     }
 
     int size() {
-        return 0;
+        int count = 0;
+        for (Resume resume : storage) {
+            if (resume == null) break;
+            count++;
+        }
+        return count;
     }
 }
