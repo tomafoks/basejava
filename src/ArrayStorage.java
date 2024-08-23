@@ -3,29 +3,30 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    int size = 0;
 
     void clear() {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) break;
             storage[i] = null;
         }
+        size = 0;
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
+                size++;
                 break;
             }
         }
     }
 
     Resume get(String uuid) {
-        for (Resume resume : storage) {
-            if (resume != null) {
-                if (resume.uuid == uuid) {
-                    return resume;
-                }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid == uuid) {
+                return storage[i];
             }
         }
         return null;
@@ -37,8 +38,8 @@ public class ArrayStorage {
                 break;
             }
             if (storage[i].uuid == uuid) {
-                storage[i] = storage[this.size() - 1];
-                storage[this.size() - 1] = null;
+                storage[i] = storage[size() - 1];
+                storage[size() - 1] = null;
             }
         }
     }
@@ -47,8 +48,8 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] getResume = new Resume[this.size()];
-        for (int i = 0; i < this.size(); i++) {
+        Resume[] getResume = new Resume[size()];
+        for (int i = 0; i < size(); i++) {
             if (storage[i] != null) {
                 getResume[i] = storage[i];
             }
@@ -57,11 +58,12 @@ public class ArrayStorage {
     }
 
     int size() {
-        int count = 0;
-        for (Resume resume : storage) {
-            if (resume == null) break;
-            count++;
-        }
-        return count;
+        return size;
+//        int count = 0;
+//        for (Resume resume : storage) {
+//            if (resume == null) break;
+//            count++;
+//        }
+//        return count;
     }
 }
