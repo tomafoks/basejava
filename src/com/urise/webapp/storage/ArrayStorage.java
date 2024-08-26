@@ -1,3 +1,7 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
@@ -12,7 +16,7 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         storage[size++] = r;
     }
 
