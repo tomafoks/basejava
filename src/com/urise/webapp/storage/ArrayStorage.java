@@ -20,6 +20,10 @@ public class ArrayStorage {
         storage[size++] = r;
     }
 
+    public void update(Resume resume) {
+
+    }
+
     public Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
@@ -51,5 +55,9 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private boolean checkPresence() {
+        return size > 0;
     }
 }
