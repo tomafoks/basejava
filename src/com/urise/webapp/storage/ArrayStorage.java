@@ -17,7 +17,11 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        storage[size++] = r;
+        if (size < storage.length) {
+            if (foundResume(r.getUuid()) == null) {
+                storage[size++] = r;
+            }
+        }
     }
 
     public void update(Resume resume) {
