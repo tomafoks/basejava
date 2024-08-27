@@ -2,6 +2,8 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -10,66 +12,53 @@ public class ArrayStorage {
     private int size;
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume r) {
-        if (!presenceResume(storage[size])) {
-            storage[size++] = r;
-        }
+        storage[size++] = r;
     }
 
     public void update(Resume resume) {
-        if (presenceResume(resume)) {
-
-        }
+        if (foundResume(resume.getUuid()) != null) {
+            resume.setUuid("test update");
+        } else System.out.println("ERROR " + resume.getUuid() + " not found");
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (presenceResume(storage[i])) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    return storage[i];
-                }
-            }
-        }
+        Resume r = foundResume(uuid);
+        if (r != null) {
+            return r;
+        } else System.out.println("ERROR " + uuid + " not found");
         return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (presenceResume(storage[i])) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    size--;
-                    storage[i] = storage[size];
-                    storage[size] = null;
-                    break;
-                }
-            }
-        }
+        Resume r = foundResume(uuid);
+        if (r != null) {
+            size--;
+            r.setUuid(storage[size].getUuid());
+            storage[size] = null;
+        } else System.out.println("ERROR " + uuid + " not found");
     }
+
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] resumes = new Resume[size];
-        System.arraycopy(storage, 0, resumes, 0, size);
-        return resumes;
+        return Arrays.copyOf(storage, size);
     }
 
     public int size() {
         return size;
     }
 
-    private boolean presenceResume(Resume r) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].equals(r))
-                return true;
-        }
-        return false;
+    private Resume foundResume(String uuid) {
+        for (int i = 0; i < size; i++)
+            if (storage[i].getUuid().equals(uuid))
+                return storage[i];
+        return null;
     }
 }
