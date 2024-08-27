@@ -8,7 +8,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
     public void clear() {
@@ -18,31 +19,31 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         if (size < storage.length) {
-            if (foundResume(r.getUuid()) == null) {
+            if (getIndex(r.getUuid()) >= 0) {
                 storage[size++] = r;
             }
         }
     }
 
     public void update(Resume resume) {
-        if (foundResume(resume.getUuid()) != null) {
+        if (getIndex(resume.getUuid()) >= 0) {
             resume.setUuid("test update");
         } else System.out.println("ERROR " + resume.getUuid() + " not found");
     }
 
     public Resume get(String uuid) {
-        Resume r = foundResume(uuid);
-        if (r != null) {
-            return r;
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
         } else System.out.println("ERROR " + uuid + " not found");
         return null;
     }
 
     public void delete(String uuid) {
-        Resume r = foundResume(uuid);
-        if (r != null) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
             size--;
-            r.setUuid(storage[size].getUuid());
+            storage[index].setUuid(storage[size].getUuid());
             storage[size] = null;
         } else System.out.println("ERROR " + uuid + " not found");
     }
@@ -59,10 +60,10 @@ public class ArrayStorage {
         return size;
     }
 
-    private Resume foundResume(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++)
             if (storage[i].getUuid().equals(uuid))
-                return storage[i];
-        return null;
+                return i;
+        return -1;
     }
 }
