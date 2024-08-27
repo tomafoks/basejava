@@ -17,17 +17,23 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        storage[size++] = r;
+        if (!presenceResume(storage[size])) {
+            storage[size++] = r;
+        }
     }
 
     public void update(Resume resume) {
+        if (presenceResume(resume)) {
 
+        }
     }
 
     public Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
+            if (presenceResume(storage[i])) {
+                if (storage[i].getUuid().equals(uuid)) {
+                    return storage[i];
+                }
             }
         }
         return null;
@@ -35,11 +41,13 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                size--;
-                storage[i] = storage[size];
-                storage[size] = null;
-                break;
+            if (presenceResume(storage[i])) {
+                if (storage[i].getUuid().equals(uuid)) {
+                    size--;
+                    storage[i] = storage[size];
+                    storage[size] = null;
+                    break;
+                }
             }
         }
     }
@@ -57,7 +65,11 @@ public class ArrayStorage {
         return size;
     }
 
-    private boolean checkPresence() {
-        return size > 0;
+    private boolean presenceResume(Resume r) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].equals(r))
+                return true;
+        }
+        return false;
     }
 }
