@@ -21,7 +21,7 @@ public class ArrayStorage {
         if (size >= storage.length) {
             System.out.println("array overflow");
         } else if (getIndex(r.getUuid()) >= 0) {
-            System.out.println("resume exists");
+            System.out.println("resume " + r.getUuid() + " exists in array");
         } else {
             storage[size++] = r;
         }
