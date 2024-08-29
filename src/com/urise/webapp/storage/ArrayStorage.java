@@ -28,8 +28,9 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0) {
-            resume.setUuid("test update");
+        int index = getIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index] = resume;
         } else {
             System.out.println("ERROR " + resume.getUuid() + " not found");
         }
@@ -49,7 +50,7 @@ public class ArrayStorage {
         int index = getIndex(uuid);
         if (index >= 0) {
             size--;
-            storage[index].setUuid(storage[size].getUuid());
+            storage[index] = storage[size];
             storage[size] = null;
         } else {
             System.out.println("ERROR " + uuid + " not found");
