@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 
 /**
- * Test for your ArrayStorage implementation
+ * Test ru.javawebinar.basejava.storage.ArrayStorage
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
@@ -26,19 +26,13 @@ public class MainTestArrayStorage {
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-
         printAll();
-
-        r2.setUuid("test update");
-        ARRAY_STORAGE.update(r2);
-
         ARRAY_STORAGE.delete(r1.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
-
     }
 
     static void printAll() {
