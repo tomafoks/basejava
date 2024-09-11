@@ -15,7 +15,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume() {
+    protected void deleteResume(int index) {
 
     }
 
@@ -26,4 +26,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         searchKey.setUuid(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
+
+//    @Override
+//    public int compareTo(Resume o) {
+//        return this.
+//    }
 }
