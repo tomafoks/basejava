@@ -1,36 +1,61 @@
 package com.urise.webapp.storage;
 
-import org.junit.jupiter.api.Test;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.model.Resume;
+import org.junit.Assert;
+import org.junit.Before;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class AbstractArrayStorageTest {
-
-    @Test
-    void get() {
+public abstract class AbstractArrayStorageTest {
+    AbstractArrayStorageTest() {
+        storage = new ArrayStorage();
     }
 
-    @Test
-    void update() {
+    private final Storage storage;
+
+    private static final String uuid_1 = "uuid1";
+    private static final String uuid_2 = "uuid2";
+    private static final String uuid_3 = "uuid3";
+
+    //@Before вызывается первым при каждом обращении к любому методу
+    @Before
+    public void setUp() {
+        storage.clear();
+        storage.save(new Resume(uuid_1));
+        storage.save(new Resume(uuid_2));
+        storage.save(new Resume(uuid_3));
     }
 
-    @Test
-    void save() {
+    @org.junit.Test
+    public void get() {
     }
 
-    @Test
-    void delete() {
+    @org.junit.Test
+    public void update() {
     }
 
-    @Test
-    void clear() {
+    @org.junit.Test
+    public void save() {
     }
 
-    @Test
-    void getAll() {
+    @org.junit.Test
+    public void delete() {
     }
 
-    @Test
-    void size() {
+    @org.junit.Test
+    public void clear() {
+    }
+
+    @org.junit.Test
+    public void getAll() {
+    }
+
+    @org.junit.Test
+    public void size() {
+        Assert.assertEquals(3, storage.size());
+    }
+
+    @org.junit.Test(expected = NotExistStorageException.class)
+    public void getNotExist() {
+        storage.get("dummy");
     }
 }
