@@ -4,57 +4,64 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest {
-    AbstractArrayStorageTest() {
-        storage = new ArrayStorage();
-    }
 
-    private final Storage storage;
+    public Storage storage;
+
+    AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     private static final String uuid_1 = "uuid1";
     private static final String uuid_2 = "uuid2";
     private static final String uuid_3 = "uuid3";
+    private static final Resume resume_1 = new Resume(uuid_1);
+    private static final Resume resume_2 = new Resume(uuid_2);
+    private static final Resume resume_3 = new Resume(uuid_3);
 
-    //@Before вызывается первым при каждом обращении к любому методу
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(new Resume(uuid_1));
-        storage.save(new Resume(uuid_2));
-        storage.save(new Resume(uuid_3));
+        storage.save(resume_1);
+        storage.save(resume_2);
+        storage.save(resume_3);
     }
 
-    @org.junit.Test
+    @Test
     public void get() {
+        Assert.assertEquals(resume_1, storage.get(resume_1.getUuid()));
+        Assert.assertEquals(resume_2, storage.get(resume_2.getUuid()));
+        Assert.assertEquals(resume_3, storage.get(resume_3.getUuid()));
     }
 
-    @org.junit.Test
+    @Test
     public void update() {
     }
 
-    @org.junit.Test
+    @Test
     public void save() {
     }
 
-    @org.junit.Test
+    @Test
     public void delete() {
     }
 
-    @org.junit.Test
+    @Test
     public void clear() {
     }
 
-    @org.junit.Test
+    @Test
     public void getAll() {
     }
 
-    @org.junit.Test
+    @Test
     public void size() {
         Assert.assertEquals(3, storage.size());
     }
 
-    @org.junit.Test(expected = NotExistStorageException.class)
+    @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
         storage.get("dummy");
     }
