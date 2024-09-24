@@ -16,11 +16,14 @@ public class MaineReflection {
         field.get(r);
         field.set(r, "new_uuid");
         System.out.println(r);
-        System.out.println("");
+        System.out.println();
 
 
         Class<? extends Resume> res = r.getClass();
         Method toStr = res.getMethod("toString");
         System.out.println(toStr.getName());
+        Object re = toStr.invoke(r);
+        System.out.println(re);
+
     }
 }
