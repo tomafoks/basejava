@@ -15,6 +15,7 @@ public abstract class AbstractArrayStorageTest {
         this.storage = storage;
     }
 
+    private static final String UUID_NOT_EXIST = "dummy";
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -55,6 +56,7 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(RESUME3.getUuid());
+        assertSize(2);
         storage.get(RESUME3.getUuid());
     }
 
@@ -66,11 +68,11 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] array = storage.getAll();
-        Assert.assertEquals(3, array.length);
-        Assert.assertEquals(RESUME1, array[0]);
-        Assert.assertEquals(RESUME2, array[1]);
-        Assert.assertEquals(RESUME3, array[2]);
+        Resume[] getArray = storage.getAll();
+        Assert.assertEquals(3, getArray.length);
+        Assert.assertEquals(RESUME1, getArray[0]);
+        Assert.assertEquals(RESUME2, getArray[1]);
+        Assert.assertEquals(RESUME3, getArray[2]);
     }
 
     @Test
@@ -78,20 +80,27 @@ public abstract class AbstractArrayStorageTest {
         assertSize(3);
     }
 
-    @Test(expected = NotExistStorageException.class)
-    public void getNotExist() {
-        storage.get("dummy");
-    }
-
     @Test(expected = StorageException.class)
     public void arrayOverflow() {
+        storage.clear();
         try {
-            for (int i = 0; i <= AbstractArrayStorage.STORAGE_LIMIT - 4; i++) {
+            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
             Assert.fail("overflow occurred ahead of time");
         }
+        storage.save(new Resume());
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void getNotExist() {
+        storage.get(UUID_NOT_EXIST);
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() {
+        storage.get(UUID_NOT_EXIST);
     }
 
     private void assertGet(Resume resume) {
