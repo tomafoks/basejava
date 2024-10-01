@@ -10,12 +10,6 @@ import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest {
 
-    protected final Storage storage;
-
-    AbstractArrayStorageTest(Storage storage) {
-        this.storage = storage;
-    }
-
     private static final String UUID_NOT_EXIST = "dummy";
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -25,6 +19,12 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME2 = new Resume(UUID_2);
     private static final Resume RESUME3 = new Resume(UUID_3);
     private static final Resume RESUME4 = new Resume(UUID_4);
+
+    AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
+
+    protected final Storage storage;
 
     @Before
     public void setUp() {
@@ -108,6 +108,12 @@ public abstract class AbstractArrayStorageTest {
     public void updateNotExist() {
         storage.get(UUID_NOT_EXIST);
     }
+
+    @Test(expected = NotExistStorageException.class)
+    public void deleteNotExist() {
+        storage.delete(UUID_NOT_EXIST);
+    }
+
 
     private void assertGet(Resume resume) {
         Assert.assertEquals(resume, storage.get(resume.getUuid()));
