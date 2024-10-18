@@ -5,3 +5,4 @@ public class SortedStorageTest extends AbstractStorageTest {
         super(new SortedArrayStorage());
     }
 }
+

@@ -5,3 +5,4 @@ public class ListStorageTest extends AbstractStorageTest {
         super(new ListStorage());
     }
 }
+

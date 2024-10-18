@@ -83,16 +83,16 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = StorageException.class)
     public void arrayOverflow() {
-        storage.clear();
         try {
-            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail("overflow occurred ahead of time");
+            Assert.fail();
         }
         storage.save(new Resume());
     }
+
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {

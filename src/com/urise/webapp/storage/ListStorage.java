@@ -3,11 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
     //    protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    ArrayList<Resume> storageList = new ArrayList<Resume>();
+    private List<Resume> storageList = new ArrayList<>();
+
 
     @Override
     protected void removeResume(Object key, String uuid) {
