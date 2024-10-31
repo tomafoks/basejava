@@ -34,7 +34,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getResume(Object key);
 
-    protected abstract int keySearchArray(String uuid);
+    protected abstract Object keySearchArray(String uuid);
 
     protected abstract boolean isExist(Object key);
 

@@ -7,9 +7,7 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    //    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     private List<Resume> storageList = new ArrayList<>();
-
 
     @Override
     protected void removeResume(Object key, String uuid) {
@@ -47,7 +45,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int keySearchArray(String uuid) {
+    protected Object keySearchArray(String uuid) {
         for (int i = 0; i < storageList.size(); i++) {
             if (uuid.equals(storageList.get(i).getUuid())) {
                 return i;

@@ -7,41 +7,47 @@ import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
-    Map<Integer, String> storageMap = new HashMap<Integer, String>();
+    Map<String, Resume> storageMap = new HashMap<>();
 
     @Override
     protected void removeResume(Object key, String uuid) {
-
+        storageMap.remove(key);
     }
 
     @Override
     protected void saveResume(Resume r, Object key) {
-        storageMap.put((Integer) key, r.toString());
+        System.out.println(storageMap.size());
+        storageMap.put((String) key, r);
     }
 
     @Override
     protected void updateResume(Resume r, Object key) {
-
     }
 
     @Override
     protected Resume getResume(Object key) {
-        return null;
+        return storageMap.get(key);
     }
 
     @Override
-    protected int keySearchArray(String uuid) {
-        return 0;
+    protected Object keySearchArray(String uuid) {
+//        for (Map.Entry entry : storageMap.entrySet()) {
+//            if (uuid.equals(entry.getValue())) {
+//                return (int) entry.getKey();// нашли наше значение и возвращаем  ключ
+//            }
+//        }
+//        return -1;
+        return uuid;
     }
 
     @Override
     protected boolean isExist(Object key) {
-        return false;
+        return (Integer) key >= 0;
     }
 
     @Override
     public void clear() {
-
+        storageMap.clear();
     }
 
     @Override
@@ -51,6 +57,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public int size() {
-        return 0;
+        return storageMap.size();
     }
 }
