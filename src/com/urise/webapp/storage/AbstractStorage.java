@@ -43,7 +43,6 @@ public abstract class AbstractStorage implements Storage {
         if (isExist(key)) {
             throw new ExistStorageException(uuid);
         }
-        System.out.println(key);
         return key;
     }
 

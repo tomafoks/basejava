@@ -17,8 +17,6 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected void saveResume(Resume r, Object key) {
         storageMap.put(key.toString(), r);
-//        System.out.println(storageMap.toString());
-
     }
 
     @Override
@@ -32,22 +30,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object keySearchArray(String uuid) {
-        if (!storageMap.isEmpty()) {
-            for (Map.Entry entry : storageMap.entrySet()) {
-                System.out.println("string: " + uuid + "; value: " + entry.getValue());
-                System.out.println(uuid.equals(entry.getValue()));
-                if (uuid.equals(entry.getValue())) {
-                    return entry.getKey();// нашли наше значение и возвращаем  ключ
-                }
-            }
-        }
-        System.out.println("");
-        return -1;
+        return uuid;
     }
 
     @Override
     protected boolean isExist(Object key) {
-        return (Integer) key >= 0;
+        return storageMap.containsKey((String) key);
     }
 
     @Override
