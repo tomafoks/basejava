@@ -7,47 +7,47 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private List<Resume> storageList = new ArrayList<>();
+    private final List<Resume> storage = new ArrayList<>();
 
     @Override
     protected void removeResume(Object key, String uuid) {
-        storageList.remove(((Integer) key).intValue());
+        storage.remove(((Integer) key).intValue());
     }
 
     @Override
     protected void saveResume(Resume r, Object key) {
-        storageList.add(r);
+        storage.add(r);
     }
 
     @Override
     protected void updateResume(Resume r, Object key) {
-        storageList.set((Integer) key, r);
+        storage.set((Integer) key, r);
     }
 
     @Override
     protected Resume getResume(Object key) {
-        return storageList.get((Integer) key);
+        return storage.get((Integer) key);
     }
 
     @Override
     public void clear() {
-        storageList.clear();
+        storage.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return storageList.toArray(new Resume[storageList.size()]);
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
     public int size() {
-        return storageList.size();
+        return storage.size();
     }
 
     @Override
-    protected Object keySearchArray(String uuid) {
-        for (int i = 0; i < storageList.size(); i++) {
-            if (uuid.equals(storageList.get(i).getUuid())) {
+    protected Object getSearchArray(String uuid) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (uuid.equals(storage.get(i).getUuid())) {
                 return i;
             }
         }
