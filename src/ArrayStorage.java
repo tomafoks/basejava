@@ -34,6 +34,10 @@ public class ArrayStorage {
         return null;
     }
 
+    public void update(){
+
+    }
+
     void delete(String uuid) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
