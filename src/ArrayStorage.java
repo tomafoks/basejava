@@ -8,10 +8,23 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        storage[0] = r;
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == null) {
+                storage[i] = r;
+                break;
+            }
+        }
     }
 
     Resume get(String uuid) {
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == null) {
+                break;
+            }
+            if (storage[i].uuid.equals(uuid)) {
+                return storage[i];
+            }
+        }
         return null;
     }
 
