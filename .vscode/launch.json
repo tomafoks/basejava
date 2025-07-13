@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainArray",
+            "request": "launch",
+            "mainClass": "com.urise.webapp.MainArray",
+            "projectName": "basejava_285ba0fa"
+        },
+        {
+            "type": "java",
+            "name": "MainTestArrayStorage",
+            "request": "launch",
+            "mainClass": "com.urise.webapp.MainTestArrayStorage",
+            "projectName": "basejava_285ba0fa"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
