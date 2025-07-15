@@ -17,9 +17,15 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
+        if (size >= storage.length) {
+            System.out.println("storage resumes is full!");
+            return;
+        }
         if (getIndex(resume.getUuid()) == -1) {
             storage[size] = resume;
             size++;
+        } else {
+            System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
         }
     }
 
@@ -27,14 +33,18 @@ public class ArrayStorage {
         int index = getIndex(uuid);
         if (index != -1) {
             return storage[index];
+        } else {
+            System.out.println(uuid + " resume not in array 'storage'");
+            return null;
         }
-        return null;
     }
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index != -1) {
             storage[index].setUuid("updated test");
+        } else {
+            System.out.println(resume.getUuid() + " resume not in array 'storage'");
         }
     }
 
@@ -44,6 +54,8 @@ public class ArrayStorage {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
+        } else {
+            System.out.println(uuid + " resume not in array 'storage'");
         }
     }
 
