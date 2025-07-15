@@ -1,4 +1,5 @@
 package com.urise.webapp.storage;
+
 import com.urise.webapp.model.Resume;
 
 /**
@@ -16,7 +17,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        for (int i = 0; i < storage.length; i++) {
+        for (int i = 0; i < size + 1; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
                 size++;
@@ -26,32 +27,36 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                break;
-            }
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        int index = getIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
         return null;
     }
 
-    public void update() {
-
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index].setUuid("updated test");
+        }
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                break;
-            }
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
+        int index = getIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        }
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
             }
         }
-        size--;
+        return -1;
     }
 
     /**
