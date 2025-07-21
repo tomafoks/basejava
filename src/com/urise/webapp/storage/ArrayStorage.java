@@ -7,16 +7,6 @@ import com.urise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index != -1) {
-            return storage[index];
-        } else {
-            System.out.println(uuid + " resume not in array 'storage'");
-            return null;
-        }
-    }
-
     @Override
     public void doInsert(Resume resume) {
         storage[size] = resume;

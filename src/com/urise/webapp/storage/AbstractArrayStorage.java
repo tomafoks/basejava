@@ -11,11 +11,13 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     public Resume get(String uuid) {
-        return null;
-    }
-
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size());
+        int index = getIndex(uuid);
+        if (index != -1) {
+            return storage[index];
+        } else {
+            System.out.println(uuid + " resume not in array 'storage'");
+            return null;
+        }
     }
 
     public void save(Resume resume) {
@@ -31,10 +33,6 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public int size() {
-        return size;
-    }
-
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index != -1) {
@@ -42,11 +40,6 @@ public abstract class AbstractArrayStorage implements Storage {
         } else {
             System.out.println(resume.getUuid() + " resume not in array 'storage'");
         }
-    }
-
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
     }
 
     public void delete(String uuid) {
@@ -57,6 +50,19 @@ public abstract class AbstractArrayStorage implements Storage {
         } else {
             System.out.println(uuid + " resume not in array 'storage'");
         }
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size());
+    }
+
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     protected abstract int getIndex(String uuid);
