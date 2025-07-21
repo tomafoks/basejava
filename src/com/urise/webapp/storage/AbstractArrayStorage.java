@@ -6,7 +6,8 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractArrayStorage implements Storage {
 
-    protected Resume[] storage = new Resume[10000];
+    final int STORAGE_LIMIT = 10000;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     @Override
@@ -17,46 +18,39 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public Resume get(String uuid) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Resume[] getAll() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void save(Resume resume) {
-               if (size() >= storage.length) {
+        if (size() >= storage.length) {
             System.out.println("storage resumes is full!");
             return;
         }
-        if (getIndex(resume.getUuid()) == -1) {
-            storage[size()] = resume;
-            size++;
-        } else {
-            System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
-        }
+        doInsert(resume);
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return size;
     }
 
     @Override
     public void update(Resume resume) {
         // TODO Auto-generated method stub
-
     }
 
+    protected abstract int getIndex(String uuid);
+
+    protected abstract void doInsert(Resume resume);
 }

@@ -7,27 +7,7 @@ import com.urise.webapp.model.Resume;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
-    private int size = 0;
-
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    public void save(Resume resume) {
-        if (size >= storage.length) {
-            System.out.println("storage resumes is full!");
-            return;
-        }
-        if (getIndex(resume.getUuid()) == -1) {
-            storage[size] = resume;
-            size++;
-        } else {
-            System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
-        }
-    }
+public class ArrayStorage extends AbstractArrayStorage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
@@ -40,7 +20,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    int index = getIndex(resume.getUuid());
         if (index != -1) {
             storage[index].setUuid("updated test");
         } else {
@@ -59,23 +39,26 @@ public class ArrayStorage {
         }
     }
 
-    private int getIndex(String uuid) {
-        for (int i = 0; i < size; i++) {
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size());
+    }
+
+    @Override
+    public void doInsert(Resume resume) {
+        if (getIndex(resume.getUuid()) == -1) {
+            storage[size()] = resume;
+        } else {
+            System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
+        }
+    }
+
+    @Override
+    protected int getIndex(String uuid) {
+        for (int i = 0; i < size(); i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
         return -1;
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-    }
-
-    public int size() {
-        return size;
     }
 }
