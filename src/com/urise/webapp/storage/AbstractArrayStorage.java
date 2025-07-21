@@ -8,49 +8,60 @@ public abstract class AbstractArrayStorage implements Storage {
 
     final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size = 0;
+    protected int size = 0;
 
-    @Override
+    public Resume get(String uuid) {
+        return null;
+    }
+
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size());
+    }
+
+    public void save(Resume resume) {
+        if (size >= storage.length) {
+            System.out.println("storage resumes is full!");
+            return;
+        }
+        if (getIndex(resume.getUuid()) == -1) {
+            doInsert(resume);
+            size++;
+        } else {
+            System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
+        }
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index].setUuid("updated test");
+        } else {
+            System.out.println(resume.getUuid() + " resume not in array 'storage'");
+        }
+    }
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    @Override
     public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return null;
-    }
-
-    @Override
-    public void save(Resume resume) {
-        if (size() >= storage.length) {
-            System.out.println("storage resumes is full!");
-            return;
+        int index = getIndex(uuid);
+        if (index != -1) {
+            doDeleted(index);
+            size--;
+        } else {
+            System.out.println(uuid + " resume not in array 'storage'");
         }
-        doInsert(resume);
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public void update(Resume resume) {
-        // TODO Auto-generated method stub
     }
 
     protected abstract int getIndex(String uuid);
 
     protected abstract void doInsert(Resume resume);
+
+    protected abstract void doDeleted(int index);
 }
