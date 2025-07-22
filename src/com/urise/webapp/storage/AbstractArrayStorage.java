@@ -12,7 +12,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index != -1) {
+        if (index >= 0) {
             return storage[index];
         } else {
             System.out.println(uuid + " resume not in array 'storage'");
@@ -22,11 +22,12 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume resume) {
         if (size >= storage.length) {
-            System.out.println("storage resumes is full!");
+            System.out.println("storage resume is full!");
             return;
         }
-        if (getIndex(resume.getUuid()) == -1) {
-            doInsert(resume);
+        int index = getIndex(resume.getUuid());
+        if (index < 0) {
+            doInsert(resume, index);
             size++;
         } else {
             System.out.println(resume.getUuid() + " resume is available in the array 'storage'");
@@ -35,17 +36,18 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index != -1) {
+        if (index >= 0) {
             storage[index].setUuid("updated test");
         } else {
-            System.out.println(resume.getUuid() + " resume not in array 'storage'");
+            System.out.println(resume.getUuid() + " resume not in array 'storage' UPDATED");
         }
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index != -1) {
+        if (index >= 0) {
             doDeleted(index);
+            storage[size() - 1] = null;
             size--;
         } else {
             System.out.println(uuid + " resume not in array 'storage'");
@@ -67,7 +69,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void doInsert(Resume resume);
+    protected abstract void doInsert(Resume resume, int key);
 
     protected abstract void doDeleted(int index);
 }
