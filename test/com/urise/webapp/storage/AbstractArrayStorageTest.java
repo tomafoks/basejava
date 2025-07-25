@@ -7,16 +7,15 @@ import org.junit.Test;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-public class AbstractArrayStorageTest {
-
-    public AbstractArrayStorageTest() {
-    }
-
-    static final Storage storage = new ArrayStorage();
-
+public abstract class AbstractArrayStorageTest {
+    protected Storage storage;
     private final static String UUID_1 = "uuid1";
     private final static String UUID_2 = "uuid2";
     private final static String UUID_3 = "uuid3";
+
+    protected AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() {
@@ -32,7 +31,7 @@ public class AbstractArrayStorageTest {
         Assert.assertEquals(0, storage.size());
     }
 
-    @Test (expected = NotExistStorageException.class)
+    @Test(expected = NotExistStorageException.class)
     public void testDelete() {
         storage.delete("uuid1");
         Assert.assertEquals("uuid1", storage.get("uuid1").toString());
