@@ -34,7 +34,8 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void testDelete() {
         storage.delete("uuid1");
-        Assert.assertEquals("uuid1", storage.get("uuid1").toString());
+        assertSize(2);
+        storage.get("uuid1");
     }
 
     @Test
@@ -69,5 +70,9 @@ public abstract class AbstractArrayStorageTest {
     public void testUpdate() {
         storage.update(storage.get("uuid1"));
         Assert.assertEquals("updated", storage.get("updated").toString());
+    }
+
+    private void assertSize(int size) {
+        Assert.assertEquals(size, storage.size());
     }
 }
