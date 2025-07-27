@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractArrayStorageTest {
@@ -75,7 +76,17 @@ public abstract class AbstractArrayStorageTest {
         assertGet(storage.get("updated"));
     }
 
-    
+    @Test(expected = StorageException.class)
+    public void arrayOverflow() {
+        try {
+            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+                storage.save(new Resume());
+            }
+        } catch (StorageException e) {
+            Assert.fail();
+        }
+        storage.save(new Resume());
+    }
 
     private void assertGet(Resume r) {
         Assert.assertEquals(r, storage.get(r.getUuid()));
