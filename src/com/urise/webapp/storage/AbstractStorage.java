@@ -1,54 +1,59 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract boolean isExist(int searchKey);
+    protected abstract void doInsert(Resume resume, Object searchKey);
 
-    protected abstract int getSearchKey(String uuid);
+    protected abstract boolean isExist(Object searchKey);
 
-    protected abstract void doUpdate(int searchKey, String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
-    protected abstract void doDeleted(int searchKey, String uuid);
+    protected abstract void doUpdate(Resume resume, Object searchKey);
 
-    protected abstract void doSave(int searchKey, String uuid);
+    protected abstract void doDeleted(String uuid, Object searchKey);
+
+    protected abstract Resume doGet(String uuid, Object searchKey);
+  
+    @Override
+    public void save(Resume resume) {
+        Object searchKey = getNotExistSearchKey(resume.getUuid());
+        doInsert(resume, searchKey);
+    }
 
     @Override
     public void update(Resume resume) {
-        int searchKey = getSearchKey(resume.getUuid());
-        doUpdate(searchKey, resume.getUuid());
+        Object searchKey = getExistSearchKey(resume.getUuid());
+        doUpdate(resume, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
-        int searchKey = getSearchKey(uuid);
-        if (!isExist(searchKey)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            doDeleted(searchKey, uuid);
-        }
+        Object searchKey = getExistSearchKey(uuid);
+        doDeleted(uuid, searchKey);
     }
 
     @Override
-    public void save(Resume resume) {
-        int searchKey = getSearchKey(resume.getUuid());
-        if (!isExist(searchKey)) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            doSave(searchKey, resume.getUuid());
+    public Resume get(String uuid) {
+       Object searchKey = getExistSearchKey(uuid);
+       return doGet(uuid, searchKey);
+    }
+
+    private Object getExistSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
         }
+        return searchKey;
     }
 
-    private Object getExistSearchKey() {
-        int searchKey = getSearchKey(resume.getUuid());
-     if (!isExist(searchKey)) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            return 
+    private Object getNotExistSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return searchKey;
     }
-
 }
