@@ -1,61 +1,65 @@
 package com.urise.webapp.storage;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.urise.webapp.model.Resume;
 
-public class ListStorage extends  AbstractStorage{
+public class ListStorage extends AbstractStorage {
+
+    List<Resume> listStorage = new LinkedList<>();
 
     @Override
-    public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
-    }
+    protected Resume doGet(Object searchKey) {
+        return listStorage.get((Integer) searchKey);
 
-    @Override
-    public Resume[] getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
-    }
-
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
     @Override
     protected void doInsert(Resume resume, Object searchKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doInsert'");
-    }
-
-    @Override
-    protected boolean isExist(Object searchKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isExist'");
-    }
-
-    @Override
-    protected Object getSearchKey(String uuid) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSearchKey'");
+        listStorage.add(resume);
     }
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doUpdate'");
+        listStorage.set((Integer) searchKey, new Resume("Uppdatedddd"));
     }
 
     @Override
     protected void doDeleted(String uuid, Object searchKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doDeleted'");
+        listStorage.remove((int) searchKey);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doGet'");
+    public void clear() {
+        listStorage.clear();
     }
 
+    @Override
+    public int size() {
+        return listStorage.size();
+    }
+
+    @Override
+    public Resume[] getAll() {
+        return listStorage.toArray(new Resume[0]);
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        if ((Integer) searchKey >= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected Object getSearchKey(String uuid) {
+        for (int i = 0; i < listStorage.size(); i++) {
+            if (uuid.equals(listStorage.get(i).getUuid())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
