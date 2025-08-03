@@ -1,13 +1,13 @@
 package com.urise.webapp.storage;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.urise.webapp.model.Resume;
 
 public class ListStorage extends AbstractStorage {
 
-    List<Resume> listStorage = new LinkedList<>();
+    private List<Resume> listStorage = new ArrayList<>();
 
     @Override
     protected Resume doGet(Object searchKey) {
@@ -22,7 +22,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        listStorage.set((Integer) searchKey, new Resume("Uppdatedddd"));
+        listStorage.set((Integer) searchKey, new Resume("updated"));
     }
 
     @Override
