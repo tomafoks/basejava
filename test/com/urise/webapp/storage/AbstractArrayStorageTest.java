@@ -30,6 +30,9 @@ public abstract class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
+    @Test(expected = StorageException.class)
+    public abstract void saveOverflow();
+
     @Test
     public void testClear() {
         storage.clear();
@@ -71,18 +74,6 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void testSize() {
         assertSize(3);
-    }
-
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        try {
-            for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (final StorageException e) {
-            Assert.fail();
-        }
-        storage.save(new Resume());
     }
 
     private void assertGet(final Resume r) {
