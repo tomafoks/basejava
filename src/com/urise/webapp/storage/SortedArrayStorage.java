@@ -1,15 +1,19 @@
 package com.urise.webapp.storage;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import com.urise.webapp.model.Resume;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
+    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+
     @Override
     protected void insertElement(Resume resume, int index) {
-        int key = (-index) - 1;
-        storage[key] = resume;
+        int insertIdx = -index - 1;
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
+        storage[insertIdx] = resume;
     }
 
     @Override
@@ -22,7 +26,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume resume = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, resume);
+        Resume searchKey = new Resume(uuid);
+        return Arrays.binarySearch(storage, 0, size, searchKey, RESUME_COMPARATOR);
     }
 }
