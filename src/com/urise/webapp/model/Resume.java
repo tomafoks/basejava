@@ -7,29 +7,54 @@ import java.util.UUID;
  */
 public class Resume {
 
-    // Unique identifier
     private final String uuid;
-    private String fullName;
+    private final String fullName;
 
     public Resume() {
-        this(UUID.randomUUID().toString());
+        this(UUID.randomUUID().toString(), "Ivan!");
     }
 
-    public Resume(String fullName) {
-        this.uuid = (UUID.randomUUID().toString());
+    public Resume(String uuid, String fullName) {
+        this.uuid = uuid;
         this.fullName = fullName;
     }
 
-    @Override
-    public String toString() {
-        return fullName;
-    }
-
-    public String uuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public String fullName() {
+    public String getFullName() {
         return fullName;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Resume other = (Resume) obj;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        if (fullName == null) {
+            if (other.fullName != null)
+                return false;
+        } else if (!fullName.equals(other.fullName))
+            return false;
+        return true;
     }
 }

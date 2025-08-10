@@ -25,7 +25,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        storageMap.replace((String) searchKey, new Resume("updated"));
+        storageMap.replace((String) searchKey, new Resume("test_update", "Ivan_update"));
     }
 
     @Override

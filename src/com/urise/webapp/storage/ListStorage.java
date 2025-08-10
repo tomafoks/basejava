@@ -22,7 +22,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        listStorage.set((Integer) searchKey, new Resume("updated"));
+        listStorage.set((Integer) searchKey, new Resume("test_update", "Ivan_update"));
     }
 
     @Override
