@@ -32,7 +32,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        storage[(Integer) searchKey] = new Resume("test_update", "Ivan_update");
+        storage[(Integer) searchKey] = resume;
     }
 
     @Override
