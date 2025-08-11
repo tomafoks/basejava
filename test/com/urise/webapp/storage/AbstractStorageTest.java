@@ -25,9 +25,6 @@ public abstract class AbstractStorageTest {
         this.storage = storage;
     }
 
-    // @Test
-    // public abstract void testUpdate();
-
     @Test
     public void testUpdate() {
         Resume newResume = new Resume(UUID_1, "New Name");

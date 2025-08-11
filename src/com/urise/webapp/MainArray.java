@@ -19,19 +19,21 @@ public class MainArray {
         Resume r;
         while (true) {
             System.out.print(
-                    "Введите одну из команд - (list | size | save uuid fullName | update uuid fullName | delete uuid | get uuid | clear | exit): ");
+                    "Введите одну из команд - (list | size | save fullName | update uuid fullName | delete uuid | get uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 3) {
                 System.out.println("Неверная команда.");
                 continue;
             }
+            System.out.println(params.length);
             String uuid = null;
             String fullName = null;
             if (params.length == 3) {
-                fullName = params[2];
+                uuid = params[1].intern();
+                fullName = params[2].intern();
             }
             if (params.length == 2) {
-                uuid = params[1].intern();
+                fullName = params[1].intern();
             }
 
             switch (params[0]) {
@@ -42,7 +44,7 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume(uuid, fullName);
+                    r = new Resume(fullName);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
