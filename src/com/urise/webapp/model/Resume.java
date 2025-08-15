@@ -2,11 +2,12 @@ package com.urise.webapp.model;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.lang.Comparable;
 
 /**
  * Initial resume class
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
 
     private final String uuid;
     private final String fullName;
@@ -20,6 +21,12 @@ public class Resume {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        int i = fullName.compareTo(o.fullName);
+        return i != 0 ? i : uuid.compareTo(o.uuid);
     }
 
     public String getUuid() {
@@ -59,5 +66,10 @@ public class Resume {
         } else if (!fullName.equals(other.fullName))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Resume [uuid=" + uuid + ", fullName=" + fullName + "]";
     }
 }
